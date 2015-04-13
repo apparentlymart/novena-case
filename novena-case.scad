@@ -1,5 +1,5 @@
 
-$fs = 0.01;
+$fs = 1;
 $fa = 6;
 
 board_width = 121;
@@ -30,6 +30,7 @@ full_depth = floor_thickness + ceiling_thickness + spacer_barrel_length + board_
 show_placeholder_board = false;
 
 module novena_case() {
+    color([0.5, 0.5, 0.5])
     difference() {
         union() {
             difference() {
@@ -59,7 +60,43 @@ module novena_case() {
             h=mounting_screw_head_depth * 2,
             r=mounting_screw_head_radius
         );
+        
+        // Main port holes
+        translate([-full_width / 2 + port_wall_thickness / 2, 0, floor_thickness + board_under_clearance + board_thickness])
+        rotate(v=[0, 0, 1], a=-90)
+        rotate(v=[1, 0, 0], a=90)
+        translate([0, 0, -port_wall_thickness])
+        linear_extrude(height=port_wall_thickness * 2)
+        port_holes();
     }
+}
+
+module port_holes() {
+    // FIXME: Place the rest of the ports.
+
+    translate([board_height / 2 - 30.1851, 0])
+    ethernet_port_hole();
+
+    translate([board_height / 2 - 30.1851 - 17.53 - 2.97, 0])
+    ethernet_port_hole();
+    
+    translate([-board_height / 2 + 13.0007, 0])
+    usb_port_hole();
+
+    translate([-board_height / 2 + 13.0007 + 3.376 + 14.624, 0])
+    usb_port_hole();
+}
+
+module usb_port_hole() {
+    translate([0, 7.5 / 2])
+    square([15.7, 7.75], center=true);
+}
+
+module ethernet_port_hole() {
+    translate([0, 11.1 / 2])
+    square([17.7, 11.2], center=true);
+    translate([0, 11.1 + 1])
+    square([4.6, 2], center=true);
 }
 
 module outside_volume() {
@@ -139,7 +176,6 @@ module bottom_volume() {
 }
 
 module novena_case_bottom() {
-    color([0.5, 0.5, 0.5])
     intersection() {
         novena_case();
         bottom_volume();
@@ -147,21 +183,27 @@ module novena_case_bottom() {
 }
 
 module novena_case_top() {
-    color([0.5, 0.5, 0.5])
     difference() {
         novena_case();
         bottom_volume();
     }
 }
 
-translate([-full_width / 1.5, 0, 0]) {
-    if (show_placeholder_board) placeholder_board();
-    novena_case_bottom();
+module novena_case_split() {
+
+    translate([-full_width / 1.5, 0, 0]) {
+        if (show_placeholder_board) placeholder_board();
+        novena_case_bottom();
+    }
+
+    translate([full_width / 1.5, 0, full_depth]) {
+        rotate(v=[0, 1, 0], a=180) {
+            if (show_placeholder_board) placeholder_board();
+            novena_case_top();
+        }
+    }
+
 }
 
-translate([full_width / 1.5, 0, full_depth]) {
-    rotate(v=[0, 1, 0], a=180) {
-        if (show_placeholder_board) placeholder_board();
-        novena_case_top();
-    }
-}
+novena_case_split();
+//novena_case();
