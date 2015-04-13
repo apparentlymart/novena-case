@@ -85,6 +85,13 @@ module port_holes() {
 
     translate([-board_height / 2 + 13.0007 + 3.376 + 14.624, 0])
     usb_port_hole();
+    
+    // Power Receptacle
+    translate([
+        board_height / 2 - 8.2001 - 4.5,
+        11.2 / 2
+    ])
+    square([9.1, 11.2], center=true);
 }
 
 module usb_port_hole() {
