@@ -92,6 +92,27 @@ module port_holes() {
         11.2 / 2
     ])
     square([9.1, 11.2], center=true);
+    
+    // Headphone Jack
+    translate([
+        -board_height / 2 + 50,
+        5.1 / 2
+    ])
+    square([6, 5.2], center=true);
+    
+    // Micro USB Jack
+    translate([
+        -board_height / 2 + 63.1001,
+        2.85 / 2
+    ])
+    square([10.8, 8.7], center=true);
+    
+    // HDMI Jack
+    translate([
+        board_height / 2 - 71,
+        6.175 / 2
+    ])
+    square([16, 7], center=true);
 }
 
 module usb_port_hole() {
