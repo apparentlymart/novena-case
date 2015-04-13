@@ -1,0 +1,7 @@
+
+6 of each M2.5-threaded, 6mm machine screws, nuts and spacers. For example:
+- spacers: http://www.digikey.com/product-detail/en/V6622K/AE10789-ND/3511432
+- machine screws: http://www.digikey.com/product-detail/en/29301/KEY1048-ND/1532984
+- nuts: http://www.digikey.com/product-detail/en/4707/KEY1148-ND/4499300
+
+
