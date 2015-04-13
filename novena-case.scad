@@ -185,6 +185,13 @@ module board_mounting_holes(h=1, r=screw_hole_radius) {
     ])
     board_mounting_hole(h, r);
 
+    translate([
+        board_width / 2 - 35.619 - 26.162,
+        board_height / 2 - 72.781 + 26.162,
+        0
+    ])
+    board_mounting_hole(h, r);
+
 }
 
 module placeholder_board() {
