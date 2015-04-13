@@ -150,7 +150,7 @@ module north_port_holes() {
         board_width / 2 - 42.245 - (25 / 2),
         (7 - board_thickness) / 2
     ])
-    square([29, 7], center=true);
+    square([30, 7], center=true);
 }
 
 module south_port_holes() {
@@ -168,25 +168,29 @@ module usb_port_hole() {
 
 module ethernet_port_hole() {
     translate([0, 11.1 / 2])
-    square([17.7, 11.2], center=true);
+    square([17.9, 11.2], center=true);
     translate([0, 11.1 + 1])
     square([4.6, 2], center=true);
 }
 
 module outside_volume() {
-    translate([-full_width / 2, -full_height / 2, 0])
+    translate([
+        -board_width / 2 - board_around_clearance - port_wall_thickness,
+        -full_height / 2,
+        0
+    ])
     cube([full_width, full_height, full_depth]);
 }
 
 module inside_volume() {
     translate([
-        (-full_width / 2) + port_wall_thickness,
+        -board_width / 2 - board_around_clearance,
         (-full_height / 2) + normal_wall_thickness,
         floor_thickness]
     )
     cube([
-        full_width - port_wall_thickness - normal_wall_thickness,
-        full_height - (normal_wall_thickness * 2),
+        board_width + (2 * board_around_clearance),
+        board_height + (2 * board_around_clearance),
         full_depth - floor_thickness - ceiling_thickness]
     );
 }
@@ -286,6 +290,19 @@ module novena_case_split() {
 
 }
 
+module screw_holes() {
+    projection(cut=true)
+    translate([0, 0, -floor_thickness * 0.75 - 2.2])
+    novena_case();
+}
+
+module wall_cuts() {
+    projection(cut=true)
+    translate([0, 0, -floor_thickness - board_under_clearance - board_thickness - 1])
+    novena_case();
+}
+
 //port_holes();
 novena_case_split();
 //novena_case();
+//wall_cuts();
