@@ -76,6 +76,20 @@ module novena_case() {
         translate([0, 0, -normal_wall_thickness])
         linear_extrude(height=normal_wall_thickness * 2)
         east_port_holes();
+        
+        translate([0, full_height / 2 - normal_wall_thickness / 2, floor_thickness + board_under_clearance + board_thickness])
+        rotate(v=[0, 0, 1], a=180)
+        rotate(v=[1, 0, 0], a=90)
+        translate([0, 0, -normal_wall_thickness])
+        linear_extrude(height=normal_wall_thickness * 2)
+        north_port_holes();
+
+        translate([0, -full_height / 2 + normal_wall_thickness / 2, floor_thickness + board_under_clearance + board_thickness])
+        rotate(v=[1, 0, 0], a=90)
+        translate([0, 0, -normal_wall_thickness])
+        linear_extrude(height=normal_wall_thickness * 2)
+        south_port_holes();
+
     }
 }
 
@@ -131,6 +145,22 @@ module east_port_holes() {
     square([41.1, 4.5], center=true);    
 }
 
+module north_port_holes() {
+    translate([
+        board_width / 2 - 42.245 - (25 / 2),
+        (7 - board_thickness) / 2
+    ])
+    square([29, 7], center=true);
+}
+
+module south_port_holes() {
+    translate([
+        board_width / 2 - 13.8336 - (43.5314 / 2),
+        3.43 / 2
+    ])
+    square([44, 4.5], center=true);
+}
+    
 module usb_port_hole() {
     translate([0, 7.5 / 2])
     square([15.7, 7.75], center=true);
