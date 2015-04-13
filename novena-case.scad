@@ -98,7 +98,7 @@ module port_holes() {
         -board_height / 2 + 50,
         5.1 / 2
     ])
-    square([6, 5.2], center=true);
+    square([6, 6], center=true);
     
     // Micro USB Jack
     translate([
