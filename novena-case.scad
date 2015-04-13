@@ -67,12 +67,19 @@ module novena_case() {
         rotate(v=[1, 0, 0], a=90)
         translate([0, 0, -port_wall_thickness])
         linear_extrude(height=port_wall_thickness * 2)
-        port_holes();
+        west_port_holes();
+        
+        // Right-side SATA-2 connector
+        translate([full_width / 2 - normal_wall_thickness / 2, 0, floor_thickness + board_under_clearance + board_thickness])
+        rotate(v=[0, 0, 1], a=90)
+        rotate(v=[1, 0, 0], a=90)
+        translate([0, 0, -normal_wall_thickness])
+        linear_extrude(height=normal_wall_thickness * 2)
+        east_port_holes();
     }
 }
 
-module port_holes() {
-    // FIXME: Place the rest of the ports.
+module west_port_holes() {
 
     translate([board_height / 2 - 30.1851, 0])
     ethernet_port_hole();
@@ -113,6 +120,15 @@ module port_holes() {
         6.175 / 2
     ])
     square([16, 7], center=true);
+}
+
+module east_port_holes() {
+    // SATA-II connector
+    translate([
+        board_height / 2 - 26.60165,
+        3.43 / 2
+    ])
+    square([41.1, 4.5], center=true);    
 }
 
 module usb_port_hole() {
@@ -240,5 +256,6 @@ module novena_case_split() {
 
 }
 
+//port_holes();
 novena_case_split();
 //novena_case();
